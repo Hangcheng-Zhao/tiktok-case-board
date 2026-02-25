@@ -9,8 +9,7 @@ export interface Step {
 }
 
 export interface SessionConfig {
-  case_id: string;
-  session_id: string;
+  id: number;
   current_step: number;
   display_mode: "controlled" | "live";
   revealed_step: number;
@@ -18,7 +17,6 @@ export interface SessionConfig {
 
 export interface Response {
   id: number;
-  session_id: string;
   step: number;
   student_name: string;
   answer: string | null;

@@ -29,14 +29,3 @@ npm-debug.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-# template (separate project)
-/template
-
-# non-code files
-*.pdf
-*.pptx
-*.aiff
-*.mp3
-*.py
-*.txt

@@ -4,11 +4,9 @@ import { useState } from "react";
 
 interface StudentFormProps {
   onNameSet: (name: string) => void;
-  sessionLabel?: string;
-  title?: string;
 }
 
-export default function StudentForm({ onNameSet, sessionLabel, title }: StudentFormProps) {
+export default function StudentForm({ onNameSet }: StudentFormProps) {
   const [name, setName] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -26,11 +24,8 @@ export default function StudentForm({ onNameSet, sessionLabel, title }: StudentF
         className="bg-white rounded-2xl shadow-lg p-8 w-full max-w-md"
       >
         <h1 className="text-2xl font-bold text-gray-900 mb-2">
-          {title ?? "Case Discussion"}
+          TikTok Case Discussion
         </h1>
-        {sessionLabel && (
-          <p className="text-sm font-medium text-blue-600 mb-1">{sessionLabel}</p>
-        )}
         <p className="text-gray-500 mb-6">Enter your name to participate</p>
         <input
           type="text"

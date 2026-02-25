@@ -1,43 +1,45 @@
 "use client";
 
 import { Step, Response } from "@/lib/types";
-import WordCloud from "./WordCloud";
+import ResponseList from "./ResponseList";
 import PollDisplay from "./PollDisplay";
 
 interface BoardStepProps {
   step: Step;
   responses: Response[];
   isActive: boolean;
-  compact?: boolean;
 }
 
-export default function BoardStep({ step, responses, isActive, compact }: BoardStepProps) {
+export default function BoardStep({ step, responses, isActive }: BoardStepProps) {
   const stepResponses = responses.filter((r) => r.step === step.id);
 
   return (
     <div
-      className={`transition-all duration-500 ${
+      className={`rounded-xl border transition-all duration-500 ${
         isActive
-          ? "ring-1 ring-blue-500/50"
-          : ""
+          ? "border-blue-500 bg-gray-800/80 shadow-lg shadow-blue-500/10"
+          : "border-gray-700 bg-gray-800/40"
       }`}
     >
-      <div className={compact ? "py-2" : "py-3"}>
-        <div className="flex items-baseline justify-between mb-1">
-          <h4 className={`font-semibold text-gray-200 ${compact ? "text-sm" : "text-base"}`}>
-            {step.question}
-          </h4>
-          {stepResponses.length > 0 && (
-            <span className="text-xs text-gray-500 ml-2 shrink-0">
-              {stepResponses.length}
+      <div className="p-5">
+        <div className="flex items-start justify-between mb-3">
+          <div>
+            <span className="text-xs font-semibold text-blue-400 uppercase tracking-wide">
+              {step.pasture}
             </span>
-          )}
+            <h3 className="text-lg font-bold text-white mt-0.5">
+              {step.question}
+            </h3>
+          </div>
+          <span className="text-xs text-gray-500 bg-gray-700 px-2 py-1 rounded-full">
+            {stepResponses.length} responses
+          </span>
         </div>
 
         {step.type === "poll" && step.pollOptions ? (
           <PollDisplay responses={stepResponses} options={step.pollOptions} />
         ) : (
-          <WordCloud
+          <ResponseList
             responses={stepResponses}
             showSentiment={step.type === "sentiment"}
           />
