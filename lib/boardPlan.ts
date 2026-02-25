@@ -81,6 +81,5 @@ export const PASTURES = [
   { name: "Opening", color: "bg-purple-600", steps: [0] },
   { name: "Pasture 1: TikTok's Rise", color: "bg-blue-600", steps: [1, 2, 3] },
   { name: "Pasture 2: Business Model", color: "bg-green-600", steps: [4, 5, 6] },
-  { name: "Pasture 3a: Douyin vs TikTok", color: "bg-orange-500", steps: [7] },
-  { name: "Pasture 3b: Regulation", color: "bg-red-600", steps: [8, 9, 10] },
+  { name: "Pasture 3: Douyin, TikTok & Regulation", color: "bg-orange-500", steps: [7, 8, 9, 10] },
 ];
