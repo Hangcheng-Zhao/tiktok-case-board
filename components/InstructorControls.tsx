@@ -1,11 +1,12 @@
 "use client";
 
 import { SessionConfig, Response } from "@/lib/types";
-import { STEPS } from "@/lib/boardPlan";
+import { ConfigStep } from "@/lib/config/defaults";
 
 interface InstructorControlsProps {
   config: SessionConfig;
   responses: Response[];
+  steps: ConfigStep[];
   onAdvance: () => void;
   onGoBack: () => void;
   onReveal: () => void;
@@ -16,13 +17,14 @@ interface InstructorControlsProps {
 export default function InstructorControls({
   config,
   responses,
+  steps,
   onAdvance,
   onGoBack,
   onReveal,
   onToggleMode,
   onReset,
 }: InstructorControlsProps) {
-  const currentStep = STEPS[config.current_step];
+  const currentStep = steps[config.current_step];
   const stepResponses = responses.filter(
     (r) => r.step === config.current_step
   );
@@ -34,7 +36,7 @@ export default function InstructorControls({
         <div>
           <p className="text-sm text-gray-500">Current Step</p>
           <p className="text-lg font-bold text-gray-900">
-            {config.current_step} / {STEPS.length - 1}
+            {config.current_step} / {steps.length - 1}
           </p>
         </div>
         <div>
@@ -61,7 +63,7 @@ export default function InstructorControls({
       {currentStep && (
         <div className="bg-blue-50 border border-blue-200 rounded-xl p-5">
           <p className="text-xs font-semibold text-blue-600 uppercase tracking-wide mb-1">
-            {currentStep.pasture} — Step {currentStep.id}
+            {currentStep.topic} — Step {currentStep.id}
           </p>
           <p className="text-lg font-semibold text-gray-900">
             {currentStep.question}
@@ -79,21 +81,21 @@ export default function InstructorControls({
           disabled={config.current_step <= 0}
           className="px-4 py-3 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
         >
-          ← Previous Step
+          Previous Step
         </button>
         <button
           onClick={onAdvance}
-          disabled={config.current_step >= STEPS.length - 1}
+          disabled={config.current_step >= steps.length - 1}
           className="px-4 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
         >
-          Next Step →
+          Next Step
         </button>
         <button
           onClick={onReveal}
           disabled={config.revealed_step >= config.current_step}
           className="px-4 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
         >
-          Reveal on Board (→ Step {config.revealed_step + 1})
+          Reveal on Board (Step {config.revealed_step + 1})
         </button>
         <button
           onClick={onToggleMode}

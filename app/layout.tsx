@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "TikTok Case Discussion",
-  description: "HBS TikTok Case Classroom Discussion Board",
+  title: "Case Discussion",
+  description: "Classroom Case Discussion Board",
 };
 
 export default function RootLayout({
