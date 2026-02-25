@@ -1,21 +1,22 @@
 -- Run this in your Supabase SQL Editor (https://supabase.com/dashboard)
 -- This creates the two tables needed for the TikTok Case Discussion app
+-- Supports multiple sessions (A, B, C)
 
--- 1. Session config (single row, controls the current state)
+-- 1. Session config (one row per session)
 CREATE TABLE session_config (
-  id INTEGER PRIMARY KEY DEFAULT 1,
+  session_id TEXT PRIMARY KEY,
   current_step INTEGER NOT NULL DEFAULT 0,
   display_mode TEXT NOT NULL DEFAULT 'controlled' CHECK (display_mode IN ('controlled', 'live')),
   revealed_step INTEGER NOT NULL DEFAULT -1
 );
 
--- Insert the single config row
-INSERT INTO session_config (id, current_step, display_mode, revealed_step)
-VALUES (1, 0, 'controlled', -1);
+-- Insert config rows for each section
+INSERT INTO session_config (session_id) VALUES ('A'), ('B'), ('C');
 
 -- 2. Responses table
 CREATE TABLE responses (
   id BIGSERIAL PRIMARY KEY,
+  session_id TEXT NOT NULL,
   step INTEGER NOT NULL,
   student_name TEXT NOT NULL,
   answer TEXT,
@@ -24,11 +25,11 @@ CREATE TABLE responses (
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- Create index for fast lookups by step
-CREATE INDEX idx_responses_step ON responses(step);
+-- Create index for fast lookups by session and step
+CREATE INDEX idx_responses_session_step ON responses(session_id, step);
 
 -- Create unique constraint to prevent duplicate submissions
-CREATE UNIQUE INDEX idx_responses_unique_student_step ON responses(step, student_name);
+CREATE UNIQUE INDEX idx_responses_unique ON responses(session_id, step, student_name);
 
 -- Enable Row Level Security (required by Supabase)
 ALTER TABLE session_config ENABLE ROW LEVEL SECURITY;

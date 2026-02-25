@@ -9,7 +9,7 @@ export interface Step {
 }
 
 export interface SessionConfig {
-  id: number;
+  session_id: string;
   current_step: number;
   display_mode: "controlled" | "live";
   revealed_step: number;
@@ -17,6 +17,7 @@ export interface SessionConfig {
 
 export interface Response {
   id: number;
+  session_id: string;
   step: number;
   student_name: string;
   answer: string | null;
@@ -24,3 +25,12 @@ export interface Response {
   poll_choice: string | null;
   created_at: string;
 }
+
+export const VALID_SESSIONS = ["A", "B", "C"] as const;
+export type SessionId = (typeof VALID_SESSIONS)[number];
+
+export const SESSION_LABELS: Record<string, string> = {
+  A: "Section A",
+  B: "Section B",
+  C: "Section C",
+};
